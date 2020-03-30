@@ -1,0 +1,22 @@
+<template>
+  <div class="managementOfKeySites">
+    <!-- 重点场所管理 -->
+    重点场所管理
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'managementOfKeySites',
+  data () {
+    return {
+
+    }
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped lang="less">
+
+</style>
