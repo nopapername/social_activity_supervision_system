@@ -41,7 +41,7 @@ _axios.interceptors.response.use(
   function (error) {
     // Do something with response error
     const { status } = error.response
-
+    loadingSign.end()
     if (status == 401) {
       localStorage.removeItem("adminToken")
       Message.error({

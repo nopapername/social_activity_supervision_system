@@ -2,7 +2,7 @@
   <div class="riskEstimationResults">
     <!-- 风险预估结果管理 -->
     <h1 class="riskResult-title" style="margin: 10px 0;">省体育馆3月2日XXX大型足球比赛风险评估</h1>
-    <Table border :columns="columns1" :data="data1" max-height="300">
+    <Table border :columns="columns1" :data="data1">
       <template slot="action">
         <Button type="primary" size="small" style="margin-right: 5px">View</Button>
         <Button type="error" size="small">Delete</Button>

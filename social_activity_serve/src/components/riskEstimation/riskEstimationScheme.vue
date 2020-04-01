@@ -1,28 +1,29 @@
 <template>
   <div class="riskEstimationScheme">
     <!-- 风险预估方案管理 -->
-    <h1 class="table-title" style="margin: 10px 0;">体育赛事风险评估方案</h1>
-    <div class="table-content">
-      <div v-show="!factorData.length" style="border: 1px solid #e7e8eb; padding: 8px 0;">暂无数据</div>
-      <div
-        class="table-row"
-        v-for="(items,index1) in factorData"
-        :key="index1"
-      >
-        <div class="cell-th">{{ items.factor }}</div>
-        <div class="td-content">
-          <div class="cell-td"
-            v-for="(item, index2) in items.specific"
-            :key="index2"
-            @click="selectFactor(index1, index2, item.select)"
-            :style="{backgroundColor: item.select ? '#ffa010' : ''}">
-            {{ item.name }}</div>
+    <Table :columns="columns1" :data="data1" v-show="!isHoverEvent">
+      <template slot="nameRisk" slot-scope="{ row, index }">
+        <a href="javascript:void(0)" @click="selectEvent(row, index)">{{ row.eventName }}</a>
+      </template>
+    </Table>
+    <div v-show="isHoverEvent">
+      <h1 class="table-title" style="margin: 10px 0;">体育赛事风险评估方案</h1>
+      <div class="table-content">
+        <div v-show="!factorData.length" style="border: 1px solid #e7e8eb; padding: 8px 0;">暂无数据</div>
+        <div class="table-row" v-for="(items,index1) in factorData" :key="index1">
+          <div class="cell-th">{{ items.factor }}</div>
+          <div class="td-content">
+            <div class="cell-td" v-for="(item, index2) in items.specific" :key="index2"
+              @click="selectFactor(index1, index2, item.select)"
+              :style="{backgroundColor: item.select ? '#ffa010' : ''}">
+              {{ item.name }}</div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="submitButton">
-      <Button type="primary" style="margin-right: 100px;">保存</Button>
-      <Button type="primary">取消</Button>
+      <div class="submitButton">
+        <Button type="primary" style="margin-right: 100px;">保存</Button>
+        <Button type="primary">取消</Button>
+      </div>
     </div>
   </div>
 </template>
@@ -164,7 +165,29 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      columns1: [
+        {
+          title: '活动名称',
+          key: 'eventName',
+          slot: 'nameRisk'
+        },
+        {
+          title: '活动类型',
+          key: 'eventKind'
+        }
+      ],
+      data1: [
+        {
+          eventName: '省体育馆3月2日XXX大型足球比赛',
+          eventKind: '体育赛事'
+        },
+        {
+          eventName: '省科技馆3月6日XXX大型趣味比赛',
+          eventKind: '趣味赛事'
+        }
+      ],
+      isHoverEvent: false
     }
   },
   // computed: {
@@ -180,6 +203,11 @@ export default {
     selectFactor (index1, index2, select) {
       var { factorData } = this
       factorData[index1].specific[index2].select = !select
+    },
+    selectEvent (row, index) {
+      console.log(index)
+      console.log(row)
+      this.isHoverEvent = !this.isHoverEvent
     }
   }
 }

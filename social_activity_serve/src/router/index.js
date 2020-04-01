@@ -204,14 +204,14 @@ router.beforeEach((to, from, next) => {
   const adminToken = localStorage.adminToken
   if (to.path === '/login') {
     if (adminToken) {
-      next('/home/riskEstimation/riskEstimate')
+      next('/home/activityProcess/processManagementDiagram')
     } else {
       next()
     }
   } else {
     if (adminToken) {
       if (to.path === '/home') {
-        next('/home/riskEstimation/riskEstimate')
+        next('/home/activityProcess/processManagementDiagram')
       } else {
         next()
       }
