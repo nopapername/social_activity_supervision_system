@@ -57,58 +57,10 @@ const routes = [
         component: () => import('../components/activityProcess/processManagementDiagram.vue')
       },
       {
-        // 活动填报：基础资料
-        path: 'activityProcess/activityReportSteps/basicInformation',
-        name: 'basicInformation',
-        component: () => import('../components/activityProcess/activityReportSteps/basicInformation.vue')
-      },
-      {
-        // 活动填报：预案登记
-        path: 'activityProcess/activityReportSteps/planRegistration',
-        name: 'planRegistration',
-        component: () => import('../components/activityProcess/activityReportSteps/planRegistration.vue')
-      },
-      {
-        // 活动填报：承办单位
-        path: 'activityProcess/activityReportSteps/organizer',
-        name: 'organizer',
-        component: () => import('../components/activityProcess/activityReportSteps/organizer.vue')
-      },
-      {
-        // 活动填报：踏勘记录
-        path: 'activityProcess/activityReportSteps/surveyRecord',
-        name: 'surveyRecord',
-        component: () => import('../components/activityProcess/activityReportSteps/surveyRecord.vue')
-      },
-      {
-        // 活动填报：风险预估
-        path: 'activityProcess/activityReportSteps/riskEstimatesAnalysis',
-        name: 'riskEstimatesAnalysis',
-        component: () => import('../components/activityProcess/activityReportSteps/riskEstimatesAnalysis.vue')
-      },
-      {
-        // 活动填报：发案情况
-        path: 'activityProcess/activityReportSteps/caseSituation',
-        name: 'caseSituation',
-        component: () => import('../components/activityProcess/activityReportSteps/caseSituation.vue')
-      },
-      {
-        // 活动填报：资料管理
-        path: 'activityProcess/activityReportSteps/dataManagement',
-        name: 'dataManagement',
-        component: () => import('../components/activityProcess/activityReportSteps/dataManagement.vue')
-      },
-      {
-        // 活动填报：日志管理
-        path: 'activityProcess/activityReportSteps/workLog',
-        name: 'workLog',
-        component: () => import('../components/activityProcess/activityReportSteps/workLog.vue')
-      },
-      {
-        // 活动填报：工作总结
-        path: 'activityProcess/activityReportSteps/workSummary',
-        name: 'workSummary',
-        component: () => import('../components/activityProcess/activityReportSteps/workSummary.vue')
+        // 活动填报
+        path: 'activityProcess/activityReport',
+        name: 'activityReport',
+        component: () => import('../components/activityProcess/activityReport.vue')
       },
       // 任务计划安排------
       {

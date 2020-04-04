@@ -28,160 +28,117 @@
                     流程管理图
                   </MenuItem>
                 </router-link>
-                <Submenu name="2">
-                  <template slot="title">活动填报</template>
-                  <router-link to="/home/activityProcess/activityReportSteps/basicInformation">
-                    <MenuItem name="2-1">
-                      基础资料
-                    </MenuItem>
-                  </router-link>
-                  <router-link to="/home/activityProcess/activityReportSteps/planRegistration">
-                    <MenuItem name="2-2">
-                      预案登记
-                    </MenuItem>
-                  </router-link>
-                  <router-link to="/home/activityProcess/activityReportSteps/organizer">
-                    <MenuItem name="2-3">
-                      承办单位
-                    </MenuItem>
-                  </router-link>
-                  <router-link to="/home/activityProcess/activityReportSteps/surveyRecord">
-                    <MenuItem name="2-4">
-                      踏勘记录
-                    </MenuItem>
-                  </router-link>
-                  <router-link to="/home/activityProcess/activityReportSteps/riskEstimatesAnalysis">
-                    <MenuItem name="2-5">
-                      风险预估
-                    </MenuItem>
-                  </router-link>
-                  <router-link to="/home/activityProcess/activityReportSteps/caseSituation">
-                    <MenuItem name="2-6">
-                      发案情况
-                    </MenuItem>
-                  </router-link>
-                  <router-link to="/home/activityProcess/activityReportSteps/dataManagement">
-                    <MenuItem name="2-7">
-                      资料管理
-                    </MenuItem>
-                  </router-link>
-                  <router-link to="/home/activityProcess/activityReportSteps/workLog">
-                    <MenuItem name="2-8">
-                      日志管理
-                    </MenuItem>
-                  </router-link>
-                  <router-link to="/home/activityProcess/activityReportSteps/workSummary">
-                    <MenuItem name="2-9">
-                      工作总结
-                    </MenuItem>
-                  </router-link>
-                </Submenu>
+                <router-link to="/home/activityProcess/activityReport">
+                  <MenuItem name="1-2">
+                    活动填报
+                  </MenuItem>
+                </router-link>
               </Submenu>
-              <Submenu name="3">
+              <Submenu name="2">
                 <template slot="title">
                   <Icon type="ios-nuclear" style="float: left; line-height: 20px;" />
                   活动风险预估管理
                 </template>
                 <router-link to="/home/riskEstimation/riskEstimate">
-                  <MenuItem name="3-1">
+                  <MenuItem name="2-1">
                   风险预估项管理
                   </MenuItem>
                 </router-link>
                 <router-link to="/home/riskEstimation/riskEstimationScheme">
-                  <MenuItem name="3-2">
+                  <MenuItem name="2-2">
                   风险预估方案管理
                   </MenuItem>
                 </router-link>
                 <router-link to="/home/riskEstimation/riskEstimationResults">
-                  <MenuItem name="3-3">
+                  <MenuItem name="2-3">
                   风险预估结果管理
                   </MenuItem>
                 </router-link>
                 <router-link to="/home/riskEstimation/rectificationOpinions">
-                  <MenuItem name="3-4">
+                  <MenuItem name="2-4">
                   整改意见管理
                   </MenuItem>
                 </router-link>
               </Submenu>
-              <Submenu name="4">
+              <Submenu name="3">
                 <template slot="title">
                   <Icon type="ios-calendar" style="float: left; line-height: 20px;" />
                   任务计划安排
                 </template>
                 <router-link to="/home/missionPlan/activityTimeAllocation">
-                  <MenuItem name="4-1">
+                  <MenuItem name="3-1">
                     活动时间分配
                   </MenuItem>
                 </router-link>
                 <router-link to="/home/missionPlan/divisionOfLaborAssessment">
-                  <MenuItem name="4-2">
+                  <MenuItem name="3-2">
                     活动分工及考核
                   </MenuItem>
                 </router-link>
               </Submenu>
-              <Submenu name="5">
+              <Submenu name="4">
                 <template slot="title">
                   <Icon type="ios-stats" style="float: left; line-height: 20px;" />
                   综合数据管理与统计
                 </template>
                 <router-link to="/home/statistics/classifiedArchive">
-                  <MenuItem name="5-1">
+                  <MenuItem name="4-1">
                     活动分类归档
                   </MenuItem>
                 </router-link>
                 <router-link to="/home/statistics/managementOfKeySites">
-                  <MenuItem name="5-2">
+                  <MenuItem name="4-2">
                     重点场所管理
                   </MenuItem>
                 </router-link>
                 <router-link to="/home/statistics/businessManagement">
-                  <MenuItem name="5-3">
+                  <MenuItem name="4-3">
                     企业管理
                   </MenuItem>
                 </router-link>
                 <router-link to="/home/statistics/securityIncidentManagement">
-                  <MenuItem name="5-4">
+                  <MenuItem name="4-4">
                     治安事件管理
                   </MenuItem>
                 </router-link>
                 <router-link to="/home/statistics/comprehensiveStatistics">
-                  <MenuItem name="5-5">
+                  <MenuItem name="4-5">
                     综合统计
                   </MenuItem>
                 </router-link>
                 <router-link to="/home/statistics/breakdownStatistics">
-                  <MenuItem name="5-6">
+                  <MenuItem name="4-6">
                     分项统计
                   </MenuItem>
                 </router-link>
               </Submenu>
-              <Submenu name="6">
+              <Submenu name="5">
                 <template slot="title">
                   <Icon type="ios-cog" style="float: left; line-height: 20px;" />
                   系统管理
                 </template>
                 <router-link to="/home/systemManagement/userManagement">
-                  <MenuItem name="6-1">
+                  <MenuItem name="5-1">
                     用户管理
                   </MenuItem>
                 </router-link>
                 <router-link to="/home/systemManagement/roleManagement">
-                  <MenuItem name="6-2">
+                  <MenuItem name="5-2">
                     角色管理
                   </MenuItem>
                 </router-link>
                 <router-link to="/home/systemManagement/authorityManagement">
-                  <MenuItem name="6-3">
+                  <MenuItem name="5-3">
                     权限管理
                   </MenuItem>
                 </router-link>
                 <router-link to="/home/systemManagement/dictionaryManagement">
-                  <MenuItem name="6-4">
+                  <MenuItem name="5-4">
                     字典管理
                   </MenuItem>
                 </router-link>
                 <router-link to="/home/systemManagement/logAudit">
-                  <MenuItem name="6-5">
+                  <MenuItem name="5-5">
                     日志审计
                   </MenuItem>
                 </router-link>

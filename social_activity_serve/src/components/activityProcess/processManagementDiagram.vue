@@ -1,16 +1,16 @@
 <template>
   <div class="processManagementDiagram">
     <!-- 活动流程管理图 -->
-    活动流程管理图
+    流程图
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'processManagementDiagram',
   data () {
     return {
-
     }
   }
 }
