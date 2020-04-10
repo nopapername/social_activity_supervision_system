@@ -2,7 +2,7 @@
   <div class="activityReport">
     <!-- 活动填报 -->
     <div class="header-report">
-        <Tabs type="card" @on-click="selectTab" :value="thisTab">
+        <Tabs type="card" @on-click="selectTab" :value="thisTab" :animated="false">
           <TabPane label="基础资料"><basicInformation></basicInformation></TabPane>
           <TabPane label="预案登记"><planRegistration></planRegistration></TabPane>
           <TabPane label="单位登记"><organizer></organizer></TabPane>

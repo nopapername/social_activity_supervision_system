@@ -89,9 +89,6 @@
           <div>资质证明</div>
           <div>
             <span>
-              <Icon type="md-browsers"></Icon>浏览
-            </span>
-            <span>
               <Icon type="ios-alert"></Icon>浏览
             </span>
             <span>
