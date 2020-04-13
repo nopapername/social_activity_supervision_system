@@ -7,100 +7,86 @@
         <a href="javascript:void(0)" style="font-size: 13px; color: rgb(255, 94, 0); line-height: 26.4px; font-family: '楷体'">进入查看页面</a>
       </div>
       <div class="form-content">
-        <Form :model="formItem" :label-width="90" label-position="right" label-colon>
+        <Form :model="basicInformation" :label-width="90" label-position="right" label-colon>
           <Row type="flex" justify="space-around">
             <Col>
               <FormItem label="活动名称">
-                <Input v-model="formItem.activityName" placeholder="请输入活动名称"></Input>
+                <Input v-model="basicInformation.activityName" placeholder="请输入活动名称"></Input>
               </FormItem>
             </Col>
             <Col>
               <FormItem label="组织单位">
-                <Input v-model="formItem.organizationalUnit" placeholder="请输入组织单位"></Input>
+                <Input v-model="basicInformation.organizationalUnit" placeholder="请输入组织单位"></Input>
               </FormItem>
             </Col>
           </Row>
           <Row type="flex" justify="space-around">
             <Col>
               <FormItem label="举办时间起">
-                <Input v-model="formItem.holdStart" placeholder="请输入开始举办时间"></Input>
+                <Input v-model="basicInformation.holdStart" placeholder="请输入开始举办时间"></Input>
               </FormItem>
             </Col>
             <Col>
               <FormItem label="举办时间止">
-                <Input v-model="formItem.holdEnd" placeholder="请输入结束举办时间"></Input>
+                <Input v-model="basicInformation.holdEnd" placeholder="请输入结束举办时间"></Input>
               </FormItem>
             </Col>
           </Row>
           <Row type="flex" justify="space-around">
             <Col>
               <FormItem label="勤务时间起">
-                <Input v-model="formItem.serviceStart" placeholder="请输入勤务时间起"></Input>
+                <Input v-model="basicInformation.serviceStart" placeholder="请输入勤务时间起"></Input>
               </FormItem>
             </Col>
             <Col>
               <FormItem label="勤务时间止">
-                <Input v-model="formItem.serviceEnd" placeholder="请输入勤务时间止"></Input>
+                <Input v-model="basicInformation.serviceEnd" placeholder="请输入勤务时间止"></Input>
               </FormItem>
             </Col>
           </Row>
           <Row type="flex" justify="space-around">
             <Col>
               <FormItem label="地点">
-                <Input v-model="formItem.place" placeholder="请输入地点"></Input>
+                <Input v-model="basicInformation.place" placeholder="请输入地点"></Input>
               </FormItem>
             </Col>
             <Col>
               <FormItem label="性质">
-                <Input v-model="formItem.nature" placeholder="请输入性质"></Input>
+                <Input v-model="basicInformation.nature" placeholder="请输入性质"></Input>
               </FormItem>
             </Col>
           </Row>
           <Row type="flex" justify="space-around">
             <Col>
               <FormItem label="规模">
-                <Input v-model="formItem.extent" placeholder="请输入规模"></Input>
+                <Input v-model="basicInformation.extent" placeholder="请输入规模"></Input>
               </FormItem>
             </Col>
             <Col>
               <FormItem label="参与人数">
-                <Input v-model="formItem.peopleNum" placeholder="请输入参与人数"></Input>
+                <Input v-model="basicInformation.peopleNum" placeholder="请输入参与人数"></Input>
               </FormItem>
             </Col>
           </Row>
           <Row type="flex" justify="space-around">
             <Col>
               <FormItem label="责任民警">
-                <Input v-model="formItem.responsiblePolice" placeholder="请输入责任民警"></Input>
+                <Input v-model="basicInformation.responsiblePolice" placeholder="请输入责任民警"></Input>
               </FormItem>
             </Col>
             <Col>
               <FormItem label="经办人">
-                <Input v-model="formItem.managerPeople" placeholder="请输入经办人"></Input>
+                <Input v-model="basicInformation.managerPeople" placeholder="请输入经办人"></Input>
               </FormItem>
             </Col>
           </Row>
         </Form>
       </div>
       <div class="file-content">
-        <Divider orientation="left" style="color:rgb(255, 94, 0)">相关材料</Divider>
-        <a href="javascript:void(0)" style="font-size: 13px; position: relative; left: 4 0%;">上传</a>
-        <div class="file">
-          <div>资质证明</div>
-          <div>
-            <span>
-              <Icon type="ios-alert"></Icon>浏览
-            </span>
-            <span>
-              <Icon type="ios-cloud-download"></Icon>下载
-            </span>
-            <span>
-              <Icon type="md-pricetags"></Icon>编辑
-            </span>
-            <span>
-              <Icon type="md-trash"></Icon>删除
-            </span>
-          </div>
+        <Divider orientation="left" style="color:rgb(255, 94, 0);">相关材料</Divider>
+        <a href="javascript:void(0)" class="a-upload"><input type="file" multiple="multiple" id="someFile" @change="fileInputChange">上传</a>
+        <div class="file" v-for="(item,index) in basicInformation.flieSomes" :key="index">
+          <div>{{ item.name }}</div>
         </div>
       </div>
     </div>
@@ -108,11 +94,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'basicInformation',
   data () {
     return {
-      formItem: {
+      basicInformation: {
         activityName: '',
         organizationalUnit: '',
         holdStart: '',
@@ -124,8 +111,25 @@ export default {
         extent: '',
         peopleNum: '',
         responsiblePolice: '',
-        managerPeople: ''
+        managerPeople: '',
+        flieSomes: null
       }
+    }
+  },
+  computed: {
+    ...mapGetters(['thisTab'])
+  },
+  watch: {
+    thisTab (val) {
+      if (val !== 0) {
+        this.$store.commit('setBasicInformation', this.basicInformation)
+      }
+    }
+  },
+  methods: {
+    fileInputChange () {
+      var fileInput = document.getElementById('someFile')
+      this.basicInformation.flieSomes = fileInput.files
     }
   }
 }
@@ -154,5 +158,33 @@ export default {
 }
 .file-content {
   padding: 20px 50px;
+  position: relative;
+}
+.a-upload {
+  position: relative;
+  left: 40%;
+  display: inline-block;
+  background: #D0EEFF;
+  border: 1px solid #99D3F5;
+  border-radius: 4px;
+  padding: 2px 6px;
+  overflow: hidden;
+  color: #1E88C7;
+  text-decoration: none;
+  text-indent: 0;
+  font-size: 13px;
+}
+.a-upload input {
+  position: absolute;
+  font-size: 100px;
+  right: 0;
+  top: 0;
+  opacity: 0;
+}
+.a-upload:hover {
+  background: #AADFFD;
+  border-color: #78C3F3;
+  color: #004974;
+  text-decoration: none;
 }
 </style>

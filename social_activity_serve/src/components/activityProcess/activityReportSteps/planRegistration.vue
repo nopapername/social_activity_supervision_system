@@ -6,7 +6,8 @@
         <p style="font-size: 18px; color: rgb(255, 94, 0); font-family: '楷体'; font-weight: bold;">预案登记</p>
       </div>
       <div class="plan-content">
-        <img src="../../../assets/img/planImg.png" alt="planImg" width="100%">
+        <img :src="imgSrc" alt="planImg" width="100%" v-show="imgSrc">
+        <a href="javascript:void(0)" class="a-upload"><input type="file" id="imgFile" @change="fileImgChange">上传图片</a>
         <Form ref="planImgForm" :model="planImgForm" :rules="planImgFormRule" inline :label-width="90" label-position="right" style="margin-top: 20px;">
           <FormItem label="图片名称" prop="imgName">
             <Input v-model="planImgForm.imgName" placeholder="请输入活动名称"></Input>
@@ -79,6 +80,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'planRegistration',
   data () {
@@ -106,7 +108,37 @@ export default {
         safetyPlan: '',
         emergencyGroomingPlan: '',
         siteDeployment: '',
-        planner: ''
+        planner: '',
+        imgFile: null
+      },
+      imgSrc: ''
+    }
+  },
+  computed: {
+    planRegistration () {
+      return {
+        planImgForm: this.planImgForm,
+        planFormItem: this.planFormItem
+      }
+    },
+    ...mapGetters(['thisTab'])
+  },
+  watch: {
+    thisTab (val) {
+      if (val !== 1) {
+        this.$store.commit('setPlanRegistration', this.planRegistration)
+      }
+    }
+  },
+  methods: {
+    fileImgChange () {
+      var that = this
+      var fileInput = document.getElementById('imgFile')
+      this.planFormItem.imgFile = fileInput.files
+      var reader = new FileReader()
+      reader.readAsDataURL(fileInput.files[0])
+      reader.onload = function (e) {
+        that.imgSrc = this.result
       }
     }
   }
@@ -133,5 +165,32 @@ export default {
 }
 .plan-content {
   padding: 0 20px;
+}
+.a-upload {
+  margin-top: 10px;
+  position: relative;
+  display: inline-block;
+  background: #D0EEFF;
+  border: 1px solid #99D3F5;
+  border-radius: 4px;
+  padding: 2px 6px;
+  overflow: hidden;
+  color: #1E88C7;
+  text-decoration: none;
+  text-indent: 0;
+  font-size: 13px;
+}
+.a-upload input {
+  position: absolute;
+  font-size: 100px;
+  right: 0;
+  top: 0;
+  opacity: 0;
+}
+.a-upload:hover {
+  background: #AADFFD;
+  border-color: #78C3F3;
+  color: #004974;
+  text-decoration: none;
 }
 </style>

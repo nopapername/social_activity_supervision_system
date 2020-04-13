@@ -7,25 +7,45 @@
       </div>
       <div class="surveyRecord-content">
         <div class="file-content">
-          <div class="picture">
-            <a href="javascript:void(0)">2016年3月1日踏勘现场照片</a>
-            <div class="pic-options">
-              <span>
-                <Icon type="ios-alert"></Icon>浏览
-              </span>
-              <span>
-                <Icon type="ios-cloud-download"></Icon>下载
-              </span>
-              <span>
-                <Icon type="md-pricetags"></Icon>编辑
-              </span>
-              <span>
-                <Icon type="md-trash"></Icon>删除
-              </span>
-            </div>
+          <a href="javascript:void(0)" class="a-upload"><input type="file" multiple="multiple" accept="image/*" id="imgTakan" @change="fileImgChange">上传图片</a>
+          <div class="picture" v-for="(item,index) in surveyRecord.imgFileTakan" :key="index">
+            <a href="javascript:void(0)">{{ item.name }}</a>
           </div>
           <Divider style="margin: 20px 0;" />
-          <Table :columns="columns1" :data="data1"></Table>
+          <Form ref="surveyRecordForm" :model="surveyRecord.surveyRecordForm" :label-width="80">
+            <FormItem v-for="(item, index) in surveyRecord.surveyRecordForm.items" :key="index"
+              :label="'Item ' + index">
+              <Row style="display: flex; justify-content: space-between;">
+                <Col span="5">
+                  标题
+                  <Input type="text" v-model="item.title" placeholder="Enter something..."></Input>
+                </Col>
+                <Col span="5">
+                  详情
+                  <Input type="text" v-model="item.detail" placeholder="Enter something..."></Input>
+                </Col>
+                <Col span="5">
+                  采集人
+                  <Input type="text" v-model="item.caijipeople" placeholder="Enter something..."></Input>
+                </Col>
+                <Col span="5">
+                  时间
+                  <Input type="text" v-model="item.date" placeholder="Enter something..."></Input>
+                </Col>
+                <Col span="2">
+                  是否删除
+                  <Button @click="handleRemove(index)">Delete</Button>
+                </Col>
+              </Row>
+            </FormItem>
+            <FormItem>
+              <Row>
+                <Col span="12">
+                <Button type="dashed" long @click="handleAdd" icon="md-add">Add item</Button>
+                </Col>
+              </Row>
+            </FormItem>
+          </Form>
         </div>
       </div>
     </div>
@@ -33,50 +53,51 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'surveyRecord',
   data () {
     return {
-      columns1: [
-        {
-          title: 'Name',
-          key: 'name'
-        },
-        {
-          title: 'Age',
-          key: 'age'
-        },
-        {
-          title: 'Address',
-          key: 'address'
+      surveyRecord: {
+        imgFileTakan: null,
+        surveyRecordForm: {
+          items: [
+            {
+              title: '',
+              detail: '',
+              caijipeople: '',
+              date: ''
+            }
+          ]
         }
-      ],
-      data1: [
-        {
-          name: 'John Brown',
-          age: 18,
-          address: 'New York No. 1 Lake Park',
-          date: '2016-10-03'
-        },
-        {
-          name: 'Jim Green',
-          age: 24,
-          address: 'London No. 1 Lake Park',
-          date: '2016-10-01'
-        },
-        {
-          name: 'Joe Black',
-          age: 30,
-          address: 'Sydney No. 1 Lake Park',
-          date: '2016-10-02'
-        },
-        {
-          name: 'Jon Snow',
-          age: 26,
-          address: 'Ottawa No. 2 Lake Park',
-          date: '2016-10-04'
-        }
-      ]
+      }
+    }
+  },
+  computed: {
+    ...mapGetters(['thisTab'])
+  },
+  watch: {
+    thisTab (val) {
+      if (val !== 3) {
+        this.$store.commit('setSurveyRecord', this.surveyRecord)
+      }
+    }
+  },
+  methods: {
+    fileImgChange () {
+      var fileInput = document.getElementById('imgTakan')
+      this.surveyRecord.imgFileTakan = fileInput.files
+    },
+    handleAdd () {
+      this.surveyRecord.surveyRecordForm.items.push({
+        title: '',
+        detail: '',
+        caijipeople: '',
+        date: ''
+      })
+    },
+    handleRemove (index) {
+      this.surveyRecord.surveyRecordForm.items.splice(index, 1)
     }
   }
 }
@@ -109,5 +130,32 @@ export default {
 .picture {
   display: flex;
   justify-content: space-around;
+}
+.a-upload {
+  margin-top: 10px;
+  position: relative;
+  display: inline-block;
+  background: #D0EEFF;
+  border: 1px solid #99D3F5;
+  border-radius: 4px;
+  padding: 2px 6px;
+  overflow: hidden;
+  color: #1E88C7;
+  text-decoration: none;
+  text-indent: 0;
+  font-size: 13px;
+}
+.a-upload input {
+  position: absolute;
+  font-size: 100px;
+  right: 0;
+  top: 0;
+  opacity: 0;
+}
+.a-upload:hover {
+  background: #AADFFD;
+  border-color: #78C3F3;
+  color: #004974;
+  text-decoration: none;
 }
 </style>

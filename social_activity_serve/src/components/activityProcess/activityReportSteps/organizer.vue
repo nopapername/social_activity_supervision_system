@@ -6,10 +6,10 @@
         <p style="font-size: 18px; color: rgb(255, 94, 0); font-family: '楷体'; font-weight: bold;">单位登记</p>
       </div>
       <div class="organize-content">
-        <Form :model="organizeItem" :label-width="100" label-position="right"
+        <Form :model="organizer" :label-width="100" label-position="right"
           style="margin-top: 20px;" label-colon>
           <FormItem label="组织承办单位">
-            <Input v-model="organizeItem.input" placeholder="请输入组织承办单位"></Input>
+            <Input v-model="organizer.organizeName" placeholder="请输入组织承办单位"></Input>
           </FormItem>
         </Form>
       </div>
@@ -18,12 +18,23 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'organizer',
   data () {
     return {
-      organizeItem: {
-        input: ''
+      organizer: {
+        organizeName: ''
+      }
+    }
+  },
+  computed: {
+    ...mapGetters(['thisTab'])
+  },
+  watch: {
+    thisTab (val) {
+      if (val !== 2) {
+        this.$store.commit('setOrganizer', this.organizer)
       }
     }
   }

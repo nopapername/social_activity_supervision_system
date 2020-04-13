@@ -7,22 +7,10 @@
       </div>
       <div class="dataManagement-content">
         <div class="file-content">
-          <div class="video">
-            <a href="javascript:void(0)">视频材料1</a>
-            <div class="vid-options">
-              <span>
-                <Icon type="ios-alert"></Icon>浏览
-              </span>
-              <span>
-                <Icon type="ios-cloud-download"></Icon>下载
-              </span>
-              <span>
-                <Icon type="md-pricetags"></Icon>编辑
-              </span>
-              <span>
-                <Icon type="md-trash"></Icon>删除
-              </span>
-            </div>
+          <a href="javascript:void(0)" class="a-upload"><input type="file" multiple="multiple"
+              id="fileData" @change="fileChange">上传资料</a>
+          <div class="video" v-for="(item,index) in dataManagement.fileData" :key="index">
+            <a href="javascript:void(0)">{{ item.name }}</a>
           </div>
         </div>
       </div>
@@ -31,11 +19,30 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'dataManagement',
   data () {
     return {
-
+      dataManagement: {
+        fileData: null
+      }
+    }
+  },
+  computed: {
+    ...mapGetters(['thisTab'])
+  },
+  watch: {
+    thisTab (val) {
+      if (val !== 6) {
+        this.$store.commit('setDataManagement', this.dataManagement)
+      }
+    }
+  },
+  methods: {
+    fileChange () {
+      var fileInput = document.getElementById('fileData')
+      this.dataManagement.fileData = fileInput.files
     }
   }
 }
@@ -68,5 +75,32 @@ export default {
 .video {
   display: flex;
   justify-content: space-around;
+}
+.a-upload {
+  margin-top: 10px;
+  position: relative;
+  display: inline-block;
+  background: #D0EEFF;
+  border: 1px solid #99D3F5;
+  border-radius: 4px;
+  padding: 2px 6px;
+  overflow: hidden;
+  color: #1E88C7;
+  text-decoration: none;
+  text-indent: 0;
+  font-size: 13px;
+}
+.a-upload input {
+  position: absolute;
+  font-size: 100px;
+  right: 0;
+  top: 0;
+  opacity: 0;
+}
+.a-upload:hover {
+  background: #AADFFD;
+  border-color: #78C3F3;
+  color: #004974;
+  text-decoration: none;
 }
 </style>

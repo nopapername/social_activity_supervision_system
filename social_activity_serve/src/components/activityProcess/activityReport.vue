@@ -11,7 +11,7 @@
           <TabPane label="发案通报"><caseSituation></caseSituation></TabPane>
           <TabPane label="现场资料"><dataManagement></dataManagement></TabPane>
           <TabPane label="活动日志"><workLog></workLog></TabPane>
-          <TabPane label="工作总结"><workSummary></workSummary></TabPane>
+          <TabPane label="工作总结"><workSummary ref="workSummary"></workSummary></TabPane>
         </Tabs>
         <div class="right-report">
           <Steps :current="thisTab" direction="vertical">
@@ -29,31 +29,37 @@
         <div style="margin-top: 50px;">
           <Button type="primary" @click="preStep" v-show="!(thisTab === 0)" style="margin-right: 10px;">上一步</Button>
           <Button type="primary" @click="nextStep" v-show="!(thisTab === 8)">下一步</Button>
-          <Button type="primary" v-show="thisTab === 8">提交</Button>
+          <Button type="primary" v-show="thisTab === 8" @click="submitAllActivityInfo">提交</Button>
         </div>
     </div>
   </div>
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'activityReport',
   data () {
     return {
-      thisTab: 0
     }
   },
   methods: {
     selectTab (name) {
-      this.thisTab = name
+      this.$store.commit('selectTab', name)
     },
     nextStep () {
-      this.thisTab += 1
+      this.$store.commit('nextStep')
     },
     preStep () {
-      this.thisTab -= 1
+      this.$store.commit('preStep')
+    },
+    submitAllActivityInfo () {
+      this.$refs.workSummary.setWorkSummaryAgain()
+      console.log(this.activity)
     }
+  },
+  computed: {
+    ...mapGetters(['thisTab', 'activity'])
   },
   components: {
     basicInformation: () => import('./activityReportSteps/basicInformation.vue'),

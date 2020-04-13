@@ -6,57 +6,81 @@
         <p style="font-size: 18px; color: rgb(255, 94, 0); font-family: '楷体'; font-weight: bold;">活动日志</p>
       </div>
       <div class="workLog-content">
-        <Table :columns="columns1" :data="data1"></Table>
+        <Form :label-width="80">
+          <FormItem v-for="(item, index) in workLog" :key="index" :label="'Item ' + index">
+            <Row style="display: flex; justify-content: space-between;">
+              <Col span="5">
+              名称
+              <Input type="text" v-model="item.name" placeholder="Enter something..."></Input>
+              </Col>
+              <Col span="5">
+              详情
+              <Input type="text" v-model="item.detail" placeholder="Enter something..."></Input>
+              </Col>
+              <Col span="5">
+              编报人
+              <Input type="text" v-model="item.bianbaopeople" placeholder="Enter something..."></Input>
+              </Col>
+              <Col span="5">
+              时间
+              <Input type="text" v-model="item.date" placeholder="Enter something..."></Input>
+              </Col>
+              <Col span="2">
+              是否删除
+              <Button @click="handleRemove(index)">Delete</Button>
+              </Col>
+            </Row>
+          </FormItem>
+          <FormItem>
+            <Row>
+              <Col span="12">
+              <Button type="dashed" long @click="handleAdd" icon="md-add">Add item</Button>
+              </Col>
+            </Row>
+          </FormItem>
+        </Form>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'workLog',
   data () {
     return {
-      columns1: [
+      workLog: [
         {
-          title: 'Name',
-          key: 'name'
-        },
-        {
-          title: 'Age',
-          key: 'age'
-        },
-        {
-          title: 'Address',
-          key: 'address'
-        }
-      ],
-      data1: [
-        {
-          name: 'John Brown',
-          age: 18,
-          address: 'New York No. 1 Lake Park',
-          date: '2016-10-03'
-        },
-        {
-          name: 'Jim Green',
-          age: 24,
-          address: 'London No. 1 Lake Park',
-          date: '2016-10-01'
-        },
-        {
-          name: 'Joe Black',
-          age: 30,
-          address: 'Sydney No. 1 Lake Park',
-          date: '2016-10-02'
-        },
-        {
-          name: 'Jon Snow',
-          age: 26,
-          address: 'Ottawa No. 2 Lake Park',
-          date: '2016-10-04'
+          name: '',
+          detail: '',
+          bianbaopeople: '',
+          date: ''
         }
       ]
+    }
+  },
+  computed: {
+    ...mapGetters(['thisTab'])
+  },
+  watch: {
+    thisTab (val) {
+      if (val !== 7) {
+        this.$store.commit('setWorkLog', this.workLog)
+      }
+    }
+  },
+  methods: {
+    handleAdd () {
+      this.workLog.push({
+        name: '',
+        detail: '',
+        bianbaopeople: '',
+        date: ''
+      })
+    },
+    handleRemove (index) {
+      this.workLog.splice(index, 1)
     }
   }
 }
