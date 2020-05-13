@@ -64,7 +64,7 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 8px 20px;
-  background-color: rgba(0, 225, 255, 0.5);
+  background-color: rgba(0, 153, 255, 0.5);
 }
 .dataManagement-content {
   padding: 20px 0;

@@ -6,7 +6,7 @@
         <p style="font-size: 18px; color: rgb(255, 94, 0); font-family: '楷体'; font-weight: bold;">活动日志</p>
       </div>
       <div class="workLog-content">
-        <Form :label-width="80">
+        <Form :label-width="80" ref="form777">
           <FormItem v-for="(item, index) in workLog" :key="index" :label="'Item ' + index">
             <Row style="display: flex; justify-content: space-between;">
               <Col span="5">
@@ -71,6 +71,9 @@ export default {
     }
   },
   methods: {
+    resetFormData () {
+      this.$refs.form777.resetFields()
+    },
     handleAdd () {
       this.workLog.push({
         name: '',
@@ -102,7 +105,7 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 8px 20px;
-  background-color: rgba(0, 225, 255, 0.5);
+  background-color: rgba(0, 153, 255, 0.5);
 }
 .workLog-content {
   padding: 20px;

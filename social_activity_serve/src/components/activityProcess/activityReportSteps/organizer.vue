@@ -7,7 +7,7 @@
       </div>
       <div class="organize-content">
         <Form :model="organizer" :label-width="100" label-position="right"
-          style="margin-top: 20px;" label-colon>
+          style="margin-top: 20px;" label-colon ref="form333">
           <FormItem label="组织承办单位">
             <Input v-model="organizer.organizeName" placeholder="请输入组织承办单位"></Input>
           </FormItem>
@@ -30,6 +30,11 @@ export default {
   },
   computed: {
     ...mapGetters(['thisTab'])
+  },
+  methods: {
+    resetFormData () {
+      this.$refs.form333.resetFields()
+    }
   },
   watch: {
     thisTab (val) {
@@ -57,7 +62,7 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 8px 20px;
-  background-color: rgba(0, 225, 255, 0.5);
+  background-color: rgba(0, 153, 255, 0.5);
 }
 .organize-content {
   padding: 0 20px;

@@ -17,7 +17,7 @@
           </FormItem>
         </Form>
         <Divider style="margin-top: 0;" />
-        <Form :model="planFormItem" :label-width="100" label-position="right" label-colon>
+        <Form :model="planFormItem" :label-width="100" label-position="right" label-colon ref="form222">
           <FormItem label="场地预案名称">
             <Input v-model="planFormItem.sitePlanName" placeholder="请输入场地预案名称"></Input>
           </FormItem>
@@ -140,6 +140,10 @@ export default {
       reader.onload = function (e) {
         that.imgSrc = this.result
       }
+    },
+    resetFormData () {
+      this.$refs.form222.resetFields()
+      this.$refs.planImgForm.resetFields()
     }
   }
 }
@@ -161,7 +165,7 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 8px 20px;
-  background-color: rgba(0, 225, 255, 0.5);
+  background-color: rgba(0, 153, 255, 0.5);
 }
 .plan-content {
   padding: 0 20px;

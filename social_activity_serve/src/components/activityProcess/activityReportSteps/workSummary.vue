@@ -6,7 +6,7 @@
         <p style="font-size: 18px; color: rgb(255, 94, 0); font-family: '楷体'; font-weight: bold;">工作总结</p>
       </div>
       <div class="workSummary-content">
-        <Form :label-width="80">
+        <Form :label-width="80" ref="form888">
           <FormItem v-for="(item, index) in workSummary" :key="index" :label="'Item ' + index">
             <Row style="display: flex; justify-content: space-between;">
               <Col span="5">
@@ -71,11 +71,14 @@ export default {
     }
   },
   methods: {
+    resetFormData () {
+      this.$refs.form333.resetFields()
+    },
     setWorkSummaryAgain () {
       this.$store.commit('setWorkSummary', this.workSummary)
     },
     handleAdd () {
-      this.workLog.push({
+      this.workSummary.push({
         name: '',
         detail: '',
         bianbaopeople: '',
@@ -83,7 +86,7 @@ export default {
       })
     },
     handleRemove (index) {
-      this.workLog.splice(index, 1)
+      this.workSummary.splice(index, 1)
     }
   }
 }
@@ -105,7 +108,7 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 8px 20px;
-  background-color: rgba(0, 225, 255, 0.5);
+  background-color: rgba(0, 153, 255, 0.5);
 }
 .workSummary-content {
   padding: 20px;

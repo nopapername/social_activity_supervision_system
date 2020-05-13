@@ -196,9 +196,13 @@ export default {
       }).catch((err) => {
         console.log(err)
       })
+    },
+    getAllDictionary () {
+      this.$store.dispatch('setDictionaryObj')
     }
   },
   created () {
+    this.getAllDictionary()
     this.getExpiresInfo()
     this.getCurrentTime()
     this.getManagerInfo()

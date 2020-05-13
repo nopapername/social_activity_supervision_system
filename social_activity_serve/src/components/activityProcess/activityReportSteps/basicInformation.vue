@@ -7,7 +7,7 @@
         <a href="javascript:void(0)" style="font-size: 13px; color: rgb(255, 94, 0); line-height: 26.4px; font-family: '楷体'">进入查看页面</a>
       </div>
       <div class="form-content">
-        <Form :model="basicInformation" :label-width="90" label-position="right" label-colon>
+        <Form :model="basicInformation" :label-width="90" label-position="right" label-colon ref="form111">
           <Row type="flex" justify="space-around">
             <Col>
               <FormItem label="活动名称">
@@ -51,8 +51,8 @@
               </FormItem>
             </Col>
             <Col>
-              <FormItem label="性质">
-                <Input v-model="basicInformation.nature" placeholder="请输入性质"></Input>
+              <FormItem label="类型">
+                <Input v-model="basicInformation.nature" placeholder="请输入活动类型"></Input>
               </FormItem>
             </Col>
           </Row>
@@ -130,6 +130,9 @@ export default {
     fileInputChange () {
       var fileInput = document.getElementById('someFile')
       this.basicInformation.flieSomes = fileInput.files
+    },
+    resetFormData () {
+      this.$refs.form111.resetFields()
     }
   }
 }
@@ -151,7 +154,7 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 8px 20px;
-  background-color: rgba(0, 225, 255, 0.5);
+  background-color: rgba(0, 153, 255, 0.5);
 }
 .form-content {
   padding: 20px 50px;

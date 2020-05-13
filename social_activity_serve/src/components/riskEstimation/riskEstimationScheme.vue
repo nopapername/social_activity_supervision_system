@@ -1,13 +1,14 @@
 <template>
   <div class="riskEstimationScheme">
     <!-- 风险预估方案管理 -->
+    <Divider orientation="left" style="font-size: 12px; font-family: '楷体'; color: rgb(160, 160, 160);">风险预估管理</Divider>
     <Table :columns="columns1" :data="data1" v-show="!isHoverEvent">
       <template slot="nameRisk" slot-scope="{ row, index }">
         <a href="javascript:void(0)" @click="selectEvent(row, index)">{{ row.eventName }}</a>
       </template>
     </Table>
-    <div v-show="isHoverEvent">
-      <h1 class="table-title" style="margin: 10px 0;">体育赛事风险评估方案</h1>
+    <div v-if="isHoverEvent">
+      <h1 class="table-title" style="margin: 10px 0;">{{ data1[rowIndex].eventKind }}活动风险评估方案</h1>
       <div class="table-content">
         <div v-show="!factorData.length" style="border: 1px solid #e7e8eb; padding: 8px 0;">暂无数据</div>
         <div class="table-row" v-for="(items,index1) in factorData" :key="index1">
@@ -21,151 +22,20 @@
         </div>
       </div>
       <div class="submitButton">
-        <Button type="primary" style="margin-right: 100px;">保存</Button>
-        <Button type="primary">取消</Button>
+        <Button type="primary" style="margin-right: 100px;" @click="submitActivityRisk">保存</Button>
+        <Button type="primary" @click="selectEvent">取消</Button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'riskEstimationScheme',
   data () {
     return {
-      factorData: [
-        {
-          factor: '人的因素',
-          specific: [
-            {
-              name: '对抗程度',
-              select: true
-            },
-            {
-              name: '有无暴乱记录',
-              select: true
-            },
-            {
-              name: '有否组织人',
-              select: false
-            },
-            {
-              name: '人员素质',
-              select: true
-            },
-            {
-              name: '两队有无斗殴记录',
-              select: true
-            },
-            {
-              name: '有无重要人物观看',
-              select: true
-            },
-            {
-              name: '关键部位是否有疏导人员',
-              select: true
-            }
-          ]
-        },
-        {
-          factor: '场地的因素',
-          specific: [
-            {
-              name: '场地是否成熟',
-              select: true
-            },
-            {
-              name: '是否热闹',
-              select: true
-            },
-            {
-              name: '出口标识是否明显',
-              select: true
-            },
-            {
-              name: '是否空旷',
-              select: false
-            },
-            {
-              name: '是否安检过关',
-              select: true
-            },
-            {
-              name: '是否有应急灯',
-              select: true
-            },
-            {
-              name: '停车场容量',
-              select: false
-            },
-            {
-              name: '是否有双电源',
-              select: false
-            },
-            {
-              name: '消防通道是否达标',
-              select: false
-            },
-            {
-              name: '是否有应急出口',
-              select: false
-            },
-            {
-              name: '容纳量饱和度',
-              select: false
-            },
-            {
-              name: '人员疏散出口',
-              select: false
-            }
-          ]
-        },
-        {
-          factor: '事件的因素',
-          specific: [
-            {
-              name: '是否有国际恐怖滋事',
-              select: false
-            },
-            {
-              name: '是否搭建看台',
-              select: true
-            },
-            {
-              name: '看台是否通过安检',
-              select: true
-            },
-            {
-              name: '是否空旷',
-              select: false
-            },
-            {
-              name: '是否安检过关',
-              select: true
-            },
-            {
-              name: '是否有应急灯',
-              select: true
-            },
-            {
-              name: '停车场容量',
-              select: false
-            },
-            {
-              name: '是否有双电源',
-              select: false
-            },
-            {
-              name: '消防通道是否达标',
-              select: false
-            },
-            {
-              name: '是否有应急出口',
-              select: false
-            }
-          ]
-        }
-      ],
+      factorData: [],
       columns1: [
         {
           title: '活动名称',
@@ -177,38 +47,85 @@ export default {
           key: 'eventKind'
         }
       ],
-      data1: [
-        {
-          eventName: '省体育馆3月2日XXX大型足球比赛',
-          eventKind: '体育赛事'
-        },
-        {
-          eventName: '省科技馆3月6日XXX大型趣味比赛',
-          eventKind: '趣味赛事'
-        }
-      ],
-      isHoverEvent: false
+      data1: [],
+      isHoverEvent: false,
+      rowIndex: 0
     }
   },
-  // computed: {
-  //   specificLength () {
-  //     let maxLen = 0
-  //     this.factorData.forEach((item, index) => {
-  //       if (item.specific.length > maxLen) maxLen = item.specific.length
-  //     })
-  //     return maxLen
-  //   }
-  // },
+  computed: {
+    ...mapGetters(['activities', 'activityRisk'])
+  },
   methods: {
     selectFactor (index1, index2, select) {
       var { factorData } = this
       factorData[index1].specific[index2].select = !select
     },
     selectEvent (row, index) {
-      console.log(index)
-      console.log(row)
+      this.rowIndex = index
+      this.isHoverEvent = !this.isHoverEvent
+    },
+    getRiskEstimates () {
+      var that = this
+      this.axios.get('http://localhost:3000/api/riskEstimate/getRiskEstimate').then((res) => {
+        res.data.forEach((item, index) => {
+          const findIndex = this.factorData.findIndex((val) => val.factor === item.parentItem)
+          if (findIndex === -1) {
+            const riskObj = {}
+            riskObj.factor = item.parentItem
+            riskObj.specific = []
+            riskObj.specific.push({
+              name: item.childItem,
+              opitionsAndFen: item.opitionsAndFen,
+              select: Boolean(Math.round(Math.random()))
+            })
+            this.factorData.push(riskObj)
+          } else {
+            this.factorData[findIndex].specific.push({
+              name: item.childItem,
+              opitionsAndFen: item.opitionsAndFen,
+              select: Boolean(Math.round(Math.random()))
+            })
+          }
+        })
+      }).catch((err) => {
+        that.$Message.error('数据获取失败' + err)
+      })
+    },
+    getAllActivities () {
+      const that = this
+      for (let i = 0; i < this.activities.length; i++) {
+        this.data1.push({
+          eventName: that.activities[i].activityName,
+          eventKind: that.activities[i].activityType
+        })
+      }
+    },
+    submitActivityRisk () {
+      const activityRiskObj = {}
+      activityRiskObj.activityId = this.activities[this.rowIndex].activityId
+      activityRiskObj.activityName = this.activities[this.rowIndex].activityName
+      activityRiskObj.activityType = this.activities[this.rowIndex].activityType
+      activityRiskObj.activitySelectRisk = []
+      this.factorData.forEach((item) => {
+        item.specific.forEach((val) => {
+          if (val.select) {
+            const activitySelectRisk = {}
+            activitySelectRisk.factor = item.factor
+            activitySelectRisk.name = val.name
+            activitySelectRisk.opitionsAndFen = val.opitionsAndFen
+            activitySelectRisk.selectFen = ''
+            activityRiskObj.activitySelectRisk.push(activitySelectRisk)
+          }
+        })
+      })
+      this.$store.dispatch('setActivityRisk', activityRiskObj)
+      this.rowIndex = 0
       this.isHoverEvent = !this.isHoverEvent
     }
+  },
+  mounted () {
+    this.getAllActivities()
+    this.getRiskEstimates()
   }
 }
 </script>

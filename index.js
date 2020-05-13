@@ -2,7 +2,7 @@
  * @Author: Mr_Oyjh 
  * @Date: 2020-03-05 16:29:10 
  * @Last Modified by: Mr_Oyjh
- * @Last Modified time: 2020-03-31 15:36:22
+ * @Last Modified time: 2020-04-29 14:13:30
  */
 
 const express = require('express');
@@ -30,6 +30,10 @@ const admin = require("./api/admin");
 app.use("/api/admin", admin);  // 管理员路由
 const riskEstimate = require("./api/riskEstimate");
 app.use("/api/riskEstimate", riskEstimate); // 风险预估模块路由
+const activity = require("./api/activity");
+app.use("/api/activity", activity); // 活动填报模块路由
+const statisticsManage = require("./api/statisticsManage");
+app.use("/api/statisticsManage", statisticsManage); // 活动填报模块路由
 
 // 404页面
 app.get("*", (req, res) => {

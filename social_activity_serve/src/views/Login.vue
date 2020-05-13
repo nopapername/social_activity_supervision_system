@@ -91,7 +91,7 @@ export default {
         if (valid) {
           loadingSign.start('登录中...')
           setTimeout(() => {
-            if (this.loginInfo.loginCaptcha.toLowerCase() === this.getCookie()) {
+            if (this.loginInfo.loginCaptcha.toLowerCase() === this.getCookie()) { // true表示验证码正确
               that.$axios.post('http://localhost:3000/api/admin/login', this.loginInfo).then(res => {
                 if (res) {
                   // 解析token

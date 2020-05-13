@@ -12,7 +12,7 @@
             <a href="javascript:void(0)">{{ item.name }}</a>
           </div>
           <Divider style="margin: 20px 0;" />
-          <Form ref="surveyRecordForm" :model="surveyRecord.surveyRecordForm" :label-width="80">
+          <Form ref="form444" :model="surveyRecord.surveyRecordForm" :label-width="80">
             <FormItem v-for="(item, index) in surveyRecord.surveyRecordForm.items" :key="index"
               :label="'Item ' + index">
               <Row style="display: flex; justify-content: space-between;">
@@ -84,6 +84,9 @@ export default {
     }
   },
   methods: {
+    resetFormData () {
+      this.$refs.form444.resetFields()
+    },
     fileImgChange () {
       var fileInput = document.getElementById('imgTakan')
       this.surveyRecord.imgFileTakan = fileInput.files
@@ -119,7 +122,7 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 8px 20px;
-  background-color: rgba(0, 225, 255, 0.5);
+  background-color: rgba(0, 153, 255, 0.5);
 }
 .surveyRecord-content {
   padding: 20px 0;

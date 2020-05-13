@@ -1,6 +1,7 @@
 <template>
   <div class="riskEstimate">
     <!-- 风险预估项管理 -->
+    <Divider orientation="left" style="font-size: 12px; font-family: '楷体'; color: rgb(160, 160, 160);">风险预估管理</Divider>
     <div class="inquire-container">
       <Form>
         <FormItem>
@@ -119,7 +120,7 @@
                 <Button type="primary" @click="addRiskEstimates('formAddOption')">添加</Button>
                 </Col>
                 <Col span="2">
-                <Button>取消</Button>
+                <Button @click="ifclickQuxiao">取消</Button>
                 </Col>
               </Row>
             </FormItem>
@@ -131,6 +132,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'riskEstimate',
   data () {
@@ -160,12 +162,7 @@ export default {
         {
           title: '主项名称',
           key: 'parentItem',
-          filters: [
-            {
-              label: '人的因素',
-              value: '人的因素'
-            }
-          ],
+          filters: [],
           filterMultiple: false,
           filterMethod (value, row) {
             if (value) {
@@ -235,6 +232,7 @@ export default {
           }
           that.axios.post('http://localhost:3000/api/riskEstimate/saveRiskEstimate', addRiskEstimate).then((res) => {
             that.$Message.success('添加成功')
+            that.submitOperating(this.adminInfo.email, this.adminInfo.role, `新增了${that.itemWrite.parentItem}-${that.itemWrite.childItem}风险预估项`)
             that.getRiskEstimates()
             that.itemWrite = {
               parentItem: '',
@@ -263,6 +261,9 @@ export default {
       } else if (this.columns6.length === 4) {
         this.columns6.pop()
       }
+    },
+    ifclickQuxiao () {
+      this.ifAdd = !this.ifAdd
     },
     ifAddBtn () {
       this.ifAdd = !this.ifAdd
@@ -320,6 +321,9 @@ export default {
       this.formItem.selectChild = ''
       this.formItem.selectParent = ''
     }
+  },
+  computed: {
+    ...mapGetters(['adminInfo'])
   }
 }
 </script>
