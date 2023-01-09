@@ -16,7 +16,7 @@
     "mongoose": "^5.9.3",
     "multiparty": "^4.2.1",
     "passport": "^0.4.1",
-    "passport-jwt": "^4.0.0",
+    "passport-jwt": "^4.0.1",
     "svg-captcha": "^1.4.0",
     "uuid": "^7.0.3"
   }
